@@ -22,6 +22,6 @@ let io=new Server(expServer,{
 })
 
 chatSocket(io)
-expServer.listen(3000,()=>{
+expServer.listen(PORT,()=>{
     console.log("server is running on port",PORT)
 })
