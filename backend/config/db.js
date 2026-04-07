@@ -2,7 +2,7 @@ const { default: mongoose } = require("mongoose")
 
 const connectdb=async()=>{
     try {
-        let res=await mongoose.connect(process.env.MONGO_URL)
+        let res=await mongoose.connect(process.env.MONGO_URI)
         if(res){
             console.log("connected succesfully")
         }
