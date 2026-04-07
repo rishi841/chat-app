@@ -11,15 +11,18 @@ const JoinRoom = () => {
   const [socket, setSocket] = useState(null)
   const [name, setName] = useState('')
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(async ({ coords }) => {
-      let res = await axios.post(`http://127.0.0.1:3000/room/join/${roomId}`, {
+  const API = "https://chat-app-back-kf9x.onrender.com"
+
+ useEffect(() => {
+  navigator.geolocation.getCurrentPosition(async ({ coords }) => {
+    try {
+      let res = await axios.post(`${API}/room/join/${roomId}`, {
         lat: coords.latitude,
         long: coords.longitude
       })
 
       if (res.data.message === 'allowed') {
-        const s = io('http://127.0.0.1:3000')
+        const s = io(API)
 
         s.emit('join-room', roomId)
 
@@ -31,9 +34,12 @@ const JoinRoom = () => {
       } else {
         alert('You are outside the range')
       }
-    })
-  }, [])
-
+    } catch (err) {
+      console.log("Join error:", err)
+      alert("Backend connect nahi ho raha")
+    }
+  })
+}, [])
   const sendMessage = (e) => {
     e.preventDefault()
     if (!socket || !message || !name) return

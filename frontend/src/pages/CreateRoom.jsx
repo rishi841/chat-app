@@ -12,10 +12,12 @@ const CreateRoom = () => {
     navigator.geolocation.getCurrentPosition(
       async ({ coords }) => {
         try {
-          const res = await axios.post('http://127.0.0.1:3000/room/create', {
-            lat: coords.latitude,
-            long: coords.longitude
-          })
+         const API = "https://chat-app-back-kf9x.onrender.com"
+
+                  const res = await axios.post(`${API}/room/create`, {
+                 lat: coords.latitude,
+                 long: coords.longitude
+})
 
           setLink(res.data.link)
         } catch (err) {
